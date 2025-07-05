@@ -10,7 +10,7 @@ const EmptySlot = (props) => {
     })
 
     return(
-        <div>
+        <div className="container">
 
         </div>
     )

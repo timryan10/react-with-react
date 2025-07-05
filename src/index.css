@@ -11,3 +11,29 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.container{
+  border: solid;
+  margin: auto;
+}
+
+.title{
+  text-align: center;
+}
+
+.score{
+  text-align: center;
+}
+
+.start{
+  display: block;
+  margin: 20px auto;
+}
+
+.timer{
+  text-align: center;
+}
+
+.game-over{
+  text-align: center;
+}
