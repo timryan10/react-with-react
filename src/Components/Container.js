@@ -1,22 +1,20 @@
-import { useState } from "react";
 import EmptySlot from "./EmptySlot";
 import Target from "./Target";
 
-const Container = (props) => {
-    let [target, setTarget] = useState(false)
+const Container = ({ index, active, setScore, score, onHit }) => {
+  const handleClick = () => {
+    setScore(score + 1);
+    onHit();
+  };
 
-    const handleClick = (e) => {
-        props.setScore(props.score + 40)
-        setTarget(false)
-    }
+  return (
+    <div
+      style={{ width: '20em', height: '20em', border: 'solid', display: 'inline-block' }}
+      className="container"
+    >
+      {active ? <Target handleClick={handleClick} /> : <EmptySlot />}
+    </div>
+  );
+};
 
-    let displayTarget = target ? <Target setScore={props.setScore} toggle={setTarget} handleClick={handleClick} /> : <EmptySlot toggle={setTarget} />
-
-    return(
-        <div style={{'display': 'inline-block', 'width': '20em', 'height': '20em', 'border': 'solid'}}>
-            {displayTarget}
-        </div>
-    )
-}
-
-export default Container
+export default Container;

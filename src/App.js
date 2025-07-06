@@ -2,11 +2,11 @@ import { useState, useEffect } from "react";
 import Container from './Components/Container';
 
 function App() {
-
-  let [score, setScore] = useState(0)
-  let [showTargets, setShowTargets] = useState(false)
-  const [timeLeft, setTimeLeft] = useState(30); // 30-second timer
+  const [score, setScore] = useState(0);
+  const [showTargets, setShowTargets] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(30);
   const [gameOver, setGameOver] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(null);
 
   useEffect(() => {
     let timer;
@@ -22,16 +22,33 @@ function App() {
     return () => clearInterval(timer);
   }, [showTargets, timeLeft]);
 
+  useEffect(() => {
+    if (showTargets) {
+      const randomIndex = Math.floor(Math.random() * 9);
+      setActiveIndex(randomIndex);
+    }
+  }, [showTargets, score]);
+
   const startGame = () => {
     setScore(0);
     setTimeLeft(30);
     setGameOver(false);
     setShowTargets(true);
   };
-  
-  const renderTargets = () => {
+
+  const renderContainers = () => {
     return Array.from({ length: 9 }, (_, i) => (
-      <Container key={i} setScore={setScore} score={score} />
+      <Container
+        key={i}
+        index={i}
+        active={i === activeIndex}
+        setScore={setScore}
+        score={score}
+        onHit={() => {
+          const newIndex = Math.floor(Math.random() * 9);
+          setActiveIndex(newIndex);
+        }}
+      />
     ));
   };
 
@@ -45,7 +62,7 @@ function App() {
         <button onClick={startGame} className="start">Start</button>
       )}
 
-      {showTargets && <div className="targets">{renderTargets()}</div>}
+      {showTargets && <div className="targets">{renderContainers()}</div>}
 
       {gameOver && (
         <div className="game-over">
@@ -56,5 +73,4 @@ function App() {
     </div>
   );
 }
-
 export default App;

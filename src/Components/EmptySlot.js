@@ -1,19 +1,10 @@
-import { useEffect } from "react";
-
-const EmptySlot = (props) => {
-    useEffect(() => {
-        let randSeconds = Math.ceil(Math.random() * 5000)
-        let timer = setTimeout(() => {
-            props.toggle(true)
-        }, randSeconds)
-        return () => clearTimeout(timer)
-    })
-
-    return(
-        <div className="container">
-
-        </div>
-    )
-}
-
-export default EmptySlot
+const EmptySlot = () => {
+    return (
+      <div className="empty-slot" style={{ width: '20em', height: '20em' }}>
+        {/* Empty */}
+      </div>
+    );
+  };
+  
+  export default EmptySlot;
+  
