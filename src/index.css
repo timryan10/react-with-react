@@ -1,22 +1,41 @@
-/* App.css */
-.App {
-  text-align: center;
-  padding: 1rem;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  box-sizing: border-box;
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.targets-container {
-  flex: 1;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.container{
+  border: solid;
+  margin: auto;
+}
+
+.title{
+  text-align: center;
+}
+
+.score{
+  text-align: center;
+}
+
+.start{
+  display: block;
+  margin: 20px auto;
+}
+
+.timer{
+  text-align: center;
+}
+
+.game-over{
+  text-align: center;
 }
 
 .targets-grid {
@@ -25,60 +44,29 @@
   grid-template-rows: repeat(3, 1fr);
   width: 90vmin;
   height: 90vmin;
+  margin: auto;
   gap: 0.25rem;
-  padding: 0.5rem;
-  box-sizing: border-box;
 }
 
 .container-slot {
   width: 100%;
   height: 100%;
-  border: 1px solid #333;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #eee;
   aspect-ratio: 1 / 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #333;
+  background-color: #eee;
 }
 
-.target-box {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10%;
-  box-sizing: border-box;
+.target-box,
+.empty-slot {
+  width: 90%;
+  height: 90%;
 }
 
 .target-img {
   width: 100%;
   height: 100%;
   object-fit: contain;
-}
-
-.empty-slot {
-  width: 100%;
-  height: 100%;
-}
-
-.title {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-}
-
-.score, .timer {
-  font-size: 1.25rem;
-  margin: 0.5rem 0;
-}
-
-.start, .restart {
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
-  cursor: pointer;
-  margin-top: 1rem;
-}
-
-.game-over {
-  margin-top: 2rem;
 }

@@ -1,6 +1,6 @@
 const EmptySlot = () => {
     return (
-      <div className="empty-slot" style={{ width: '20em', height: '20em' }}>
+      <div className="empty-slot">
         {/* Empty */}
       </div>
     );

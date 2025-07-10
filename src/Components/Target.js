@@ -2,9 +2,9 @@ import redSquare from './red-square.png';
 
 const Target = ({ handleClick }) => {
     return (
-      <div>
+      <div className='target-box'>
         <img
-          style={{ width: '20em', height: '20em' }}
+          className='target-img'
           src={redSquare}
           onClick={handleClick}
           alt="Target"

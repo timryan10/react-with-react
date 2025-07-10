@@ -62,7 +62,7 @@ function App() {
         <button onClick={startGame} className="start">Start</button>
       )}
 
-      {showTargets && <div className="targets">{renderContainers()}</div>}
+      {showTargets && <div className="targets-grid">{renderContainers()}</div>}
 
       {gameOver && (
         <div className="game-over">

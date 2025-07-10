@@ -7,14 +7,12 @@ const Container = ({ index, active, setScore, score, onHit }) => {
     onHit();
   };
 
-  return (
-    <div
-      style={{ width: '20em', height: '20em', border: 'solid', display: 'inline-block' }}
-      className="container"
-    >
-      {active ? <Target handleClick={handleClick} /> : <EmptySlot />}
-    </div>
-  );
+    return (
+        <div className="container-slot">
+        {active ? <Target handleClick={handleClick} /> : <EmptySlot />}
+        </div>
+    );
+  
 };
 
 export default Container;
