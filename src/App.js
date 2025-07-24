@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Container from './Components/Container';
 
 function App() {
@@ -7,6 +7,8 @@ function App() {
   const [timeLeft, setTimeLeft] = useState(30);
   const [gameOver, setGameOver] = useState(false);
   const [activeIndex, setActiveIndex] = useState(null);
+
+  const targetTimeoutRef = useRef(null);
 
   useEffect(() => {
     let timer;
@@ -17,23 +19,39 @@ function App() {
     } else if (timeLeft === 0 && showTargets) {
       setGameOver(true);
       setShowTargets(false);
+      clearTimeout(targetTimeoutRef.current);
     }
 
     return () => clearInterval(timer);
   }, [showTargets, timeLeft]);
 
+  const spawnNewTarget = () => {
+    const newIndex = Math.floor(Math.random() * 9);
+    setActiveIndex(newIndex);
+  };
+
   useEffect(() => {
-    if (showTargets) {
-      const randomIndex = Math.floor(Math.random() * 9);
-      setActiveIndex(randomIndex);
+    if (activeIndex !== null && showTargets) {
+      clearTimeout(targetTimeoutRef.current);
+      targetTimeoutRef.current = setTimeout(() => {
+        spawnNewTarget(); // respawn another
+      }, 1000); // Timeout to hit
     }
-  }, [showTargets, score]);
+    return () => clearTimeout(targetTimeoutRef.current);
+  }, [activeIndex, showTargets]);
 
   const startGame = () => {
     setScore(0);
     setTimeLeft(30);
     setGameOver(false);
     setShowTargets(true);
+    spawnNewTarget();
+  };
+
+  const handleHit = () => {
+    clearTimeout(targetTimeoutRef.current);
+    setScore(prev => prev + 1);
+    spawnNewTarget();
   };
 
   const renderContainers = () => {
@@ -42,12 +60,7 @@ function App() {
         key={i}
         index={i}
         active={i === activeIndex}
-        setScore={setScore}
-        score={score}
-        onHit={() => {
-          const newIndex = Math.floor(Math.random() * 9);
-          setActiveIndex(newIndex);
-        }}
+        onHit={handleHit}
       />
     ));
   };
@@ -73,4 +86,5 @@ function App() {
     </div>
   );
 }
+
 export default App;

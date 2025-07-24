@@ -1,18 +1,16 @@
 import EmptySlot from "./EmptySlot";
 import Target from "./Target";
 
-const Container = ({ index, active, setScore, score, onHit }) => {
+const Container = ({ index, active, onHit }) => {
   const handleClick = () => {
-    setScore(score + 1);
-    onHit();
+    if (active) onHit(); // Only trigger if it's the active one
   };
 
-    return (
-        <div className="container-slot">
-        {active ? <Target handleClick={handleClick} /> : <EmptySlot />}
-        </div>
-    );
-  
+  return (
+    <div className="container-slot">
+      {active ? <Target handleClick={handleClick} /> : <EmptySlot />}
+    </div>
+  );
 };
 
 export default Container;
