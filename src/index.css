@@ -70,3 +70,30 @@ code {
   height: 100%;
   object-fit: contain;
 }
+
+.difficulty-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.difficulty-btn {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ccc;
+  background: #f9f9f9;
+  cursor: pointer;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+.difficulty-btn.selected {
+  background: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+label{
+  display: flex;
+  justify-content: center;
+}

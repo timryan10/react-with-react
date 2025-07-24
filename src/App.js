@@ -1,12 +1,20 @@
 import { useState, useEffect, useRef } from "react";
 import Container from './Components/Container';
 
+const difficultyConfig = {
+  easy:    { timeout: 1500, duration: 30 },
+  medium:  { timeout: 1000, duration: 30 },
+  hard:    { timeout: 600,  duration: 30 },
+};
+
 function App() {
   const [score, setScore] = useState(0);
   const [showTargets, setShowTargets] = useState(false);
   const [timeLeft, setTimeLeft] = useState(30);
   const [gameOver, setGameOver] = useState(false);
   const [activeIndex, setActiveIndex] = useState(null);
+  const [difficulty, setDifficulty] = useState(null);
+  const [timeoutDuration, setTimeoutDuration] = useState(1000);
 
   const targetTimeoutRef = useRef(null);
 
@@ -34,15 +42,19 @@ function App() {
     if (activeIndex !== null && showTargets) {
       clearTimeout(targetTimeoutRef.current);
       targetTimeoutRef.current = setTimeout(() => {
-        spawnNewTarget(); // respawn another
-      }, 1000); // Timeout to hit
+        spawnNewTarget();
+      }, timeoutDuration);
     }
     return () => clearTimeout(targetTimeoutRef.current);
-  }, [activeIndex, showTargets]);
+  }, [activeIndex, showTargets, timeoutDuration]);
 
   const startGame = () => {
+    const config = difficultyConfig[difficulty];
+    if (!config) return;
+
+    setTimeoutDuration(config.timeout);
+    setTimeLeft(config.duration);
     setScore(0);
-    setTimeLeft(30);
     setGameOver(false);
     setShowTargets(true);
     spawnNewTarget();
@@ -67,12 +79,34 @@ function App() {
 
   return (
     <div className="App">
-      <h1 className="title">React-with-React</h1>
+      <h1 className="title">React Reaction Game</h1>
       <div className="score">Score: {score}</div>
       <div className="timer">Time Left: {timeLeft}s</div>
 
       {!showTargets && !gameOver && (
-        <button onClick={startGame} className="start">Start</button>
+        <>
+          <div className="difficulty-select">
+            <label>Select Difficulty:</label>
+            <div className="difficulty-buttons">
+              {["easy", "medium", "hard"].map((level) => (
+                <button
+                  key={level}
+                  onClick={() => setDifficulty(level)}
+                  className={`difficulty-btn ${difficulty === level ? "selected" : ""}`}
+                  >
+                  {level.charAt(0).toUpperCase() + level.slice(1)}
+                </button>
+              ))}
+            </div>
+          </div>
+          <button
+            onClick={startGame}
+            className="start"
+            disabled={!difficulty}
+          >
+            Start
+          </button>
+        </>
       )}
 
       {showTargets && <div className="targets-grid">{renderContainers()}</div>}
@@ -80,7 +114,17 @@ function App() {
       {gameOver && (
         <div className="game-over">
           <h2>Game Over!</h2>
-          <button onClick={startGame} className="restart">Restart</button>
+          <button
+            onClick={() => {
+              setGameOver(false);
+              setShowTargets(false);
+              setDifficulty(null);
+              setActiveIndex(null);
+            }}
+            className="restart"
+          >
+            Restart
+          </button>
         </div>
       )}
     </div>
