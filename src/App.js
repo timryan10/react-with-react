@@ -15,8 +15,27 @@ function App() {
   const [activeIndex, setActiveIndex] = useState(null);
   const [difficulty, setDifficulty] = useState(null);
   const [timeoutDuration, setTimeoutDuration] = useState(1000);
+  //leaderboard state
+  const [bestScores, setBestScores] = useState(() => {
+    const saved = localStorage.getItem("reaction-best-scores");
+    return saved ? JSON.parse(saved) : { easy: 0, medium: 0, hard: 0 };
+  });
 
   const targetTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    if (gameOver && difficulty) {
+      setBestScores(prev => {
+        const currentBest = prev[difficulty] || 0;
+        if (score > currentBest) {
+          const updated = { ...prev, [difficulty]: score };
+          localStorage.setItem("reaction-best-scores", JSON.stringify(updated));
+          return updated;
+        }
+        return prev;
+      });
+    }
+  }, [gameOver, difficulty, score]);
 
   useEffect(() => {
     let timer;
@@ -93,8 +112,8 @@ function App() {
                   key={level}
                   onClick={() => setDifficulty(level)}
                   className={`difficulty-btn ${difficulty === level ? "selected" : ""}`}
-                  >
-                  {level.charAt(0).toUpperCase() + level.slice(1)}
+                >
+                  {level.charAt(0).toUpperCase() + level.slice(1)} (Best: {bestScores[level]})
                 </button>
               ))}
             </div>
