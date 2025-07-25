@@ -22,6 +22,7 @@ function App() {
   });
 
   const targetTimeoutRef = useRef(null);
+  const lastIndexRef = useRef(null);
 
   useEffect(() => {
     if (gameOver && difficulty) {
@@ -53,7 +54,14 @@ function App() {
   }, [showTargets, timeLeft]);
 
   const spawnNewTarget = () => {
-    const newIndex = Math.floor(Math.random() * 9);
+    let newIndex;
+    let tries = 0;
+    do {
+      newIndex = Math.floor(Math.random() * 9);
+      tries++;
+    } while (newIndex === lastIndexRef.current && tries < 10);
+  
+    lastIndexRef.current = newIndex;
     setActiveIndex(newIndex);
   };
 
